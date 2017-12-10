@@ -1,4 +1,5 @@
 {{- if .Values.rbac.create -}}
+{{- if .Values.credentialManager.kubernetes.enabled -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -12,4 +13,5 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["get"]
+{{- end -}}
 {{- end -}}
