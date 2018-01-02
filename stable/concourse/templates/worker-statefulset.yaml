@@ -34,8 +34,11 @@ spec:
             - -c
             - |-
               cp /dev/null /concourse-work-dir/.liveness_probe
+              rm -rf /concourse-work-dir/*
+              while ! concourse retire-worker --name=${HOSTNAME} | grep -q worker-not-found; do
+                sleep 5
+              done
               concourse worker --name=${HOSTNAME} | tee -a /concourse-work-dir/.liveness_probe
-              sleep ${POST_STOP_DELAY_SECONDS}
           livenessProbe:
             exec:
               command:
@@ -56,9 +59,12 @@ spec:
             preStop:
               exec:
                 command:
-                  - "/bin/sh"
-                  - "-c"
-                  - "concourse retire-worker --name=${HOSTNAME}"
+                  - /bin/sh
+                  - -c
+                  - |-
+                    while ! concourse retire-worker --name=${HOSTNAME} | grep -q worker-not-found; do
+                      sleep 5
+                    done
           env:
             - name: CONCOURSE_TSA_HOST
               valueFrom:
