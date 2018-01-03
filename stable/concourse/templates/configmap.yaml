@@ -20,6 +20,7 @@ data:
   concourse-resource-cache-cleanup-interval: {{ .Values.concourse.resourceCacheCleanupInterval | quote }}
   concourse-external-url: {{ default "" .Values.concourse.externalURL | quote }}
   concourse-baggageclaim-driver: {{ .Values.concourse.baggageclaimDriver | quote }}
+  container-placement-strategy: {{ .Values.concourse.containerPlacementStrategy | quote }}
   garden-docker-registry: {{ default "" .Values.concourse.dockerRegistry | quote }}
   garden-insecure-docker-registry: {{ default "" .Values.concourse.insecureDockerRegistry | quote }}
   github-auth-organization: {{ default "" .Values.concourse.githubAuthOrganization | quote }}

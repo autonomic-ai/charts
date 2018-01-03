@@ -184,6 +184,12 @@ concourse:
   ##
   baggageclaimDriver: naive
 
+  ## The selection strategy for placing containers onto workers, as of Concourse 3.7 this can be
+  ## "volume-locality" or "random". Random can better spread load across workers, see
+  ## https://github.com/concourse/atc/pull/219 for background.
+  ##
+  containerPlacementStrategy: random
+
   ## An URL pointing to the Docker registry to use to fetch Docker images.
   ## If unset, this will default to the Docker default
   ##
