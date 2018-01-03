@@ -36,8 +36,10 @@ spec:
               cp /dev/null /concourse-work-dir/.liveness_probe
               rm -rf /concourse-work-dir/*
               while ! concourse retire-worker --name=${HOSTNAME} | grep -q worker-not-found; do
+                touch /concourse-work-dir/.pre_start_cleanup
                 sleep 5
               done
+              rm -f /concourse-work-dir/.pre_start_cleanup
               concourse worker --name=${HOSTNAME} | tee -a /concourse-work-dir/.liveness_probe
           livenessProbe:
             exec:
@@ -50,6 +52,10 @@ spec:
                   cp /dev/null /concourse-work-dir/.liveness_probe
                   if [ ! -z "${FATAL_ERRORS}" ]; then
                     >&2 echo "Fatal error detected: ${FATAL_ERRORS}"
+                    exit 1
+                  fi
+                  if [ -f /concourse-work-dir/.pre_start_cleanup ]; then
+                    >&2 echo "Still trying to clean up before starting concourse. 'fly prune-worker -w ${HOSTNAME}' might need to be called to force cleanup."
                     exit 1
                   fi
             failureThreshold: 1
