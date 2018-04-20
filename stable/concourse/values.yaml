@@ -313,6 +313,30 @@ web:
       ## Optional prefix for all metrics to easily find them in Datadog
       # prefix: concoursedev
 
+  ## Set secure flag on auth cookies
+  ##
+  cookieSecure: false
+
+  ## The value to set for X-Frame-Options
+  ##
+  xFrameOptions: ""
+
+  ## Length of time for a intercepted session to be idle before terminating, in Go duration format
+  ##
+  interceptIdleTimeout: ""
+
+  ## Logging configuration
+  logging:
+
+    ## The log level for the ATC
+    ##
+    level: ""
+
+    ## Log database queries
+    ###
+    logDBQueries: false
+
+
 ## Configuration values for Concourse Worker components.
 ##
 worker:

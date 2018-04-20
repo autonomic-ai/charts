@@ -48,6 +48,11 @@ spec:
             - "--datadog-prefix"
             - {{ .Values.web.metrics.datadog.prefix }}
             {{- end }}
+            {{- if .Values.web.cookieSecure }}
+            - "--cookie-secure"
+            {{- end }}
+            {{- if .Values.web.logging.logDBQueries }}
+            - "--log-db-queries"
             {{- end }}
           env:
             - name: CONCOURSE_TSA_HOST_KEY
@@ -269,6 +274,7 @@ spec:
             - name: CONCOURSE_PROMETHEUS_BIND_PORT
               value: {{ .Values.web.metrics.prometheus.port | quote }}
             {{- end }}
+<<<<<<< HEAD
             {{- if .Values.web.metrics.datadog.enabled }}
             - name: CONCOURSE_DATADOG_AGENT_HOST
             {{- if .Values.web.metrics.datadog.agentHostUseHostIP }}
@@ -280,6 +286,19 @@ spec:
             {{- end }}
             - name: CONCOURSE_DATADOG_AGENT_PORT
               value: {{ .Values.web.metrics.datadog.agentPort | quote }}
+=======
+            {{- if .Values.web.xFrameOptions }}
+            - name: CONCOURSE_X_FRAME_OPTIONS
+              value: {{ .Values.web.xFrameOptions | quote }}
+            {{- end }}
+            {{- if .Values.web.interceptIdleTimeout }}
+            - name: CONCOURSE_INTERCEPT_IDLE_TIMEOUT
+              value: {{ .Values.web.interceptIdleTimeout | quote }}
+            {{- end }}
+            {{- if .Values.web.logging.level }}
+            - name: CONCOURSE_LOG_LEVEL
+              value: {{ .Values.web.logging.logLevel | quote }}
+>>>>>>> Add miscellaneous concourse atc flags.
             {{- end }}
           ports:
             - name: atc
