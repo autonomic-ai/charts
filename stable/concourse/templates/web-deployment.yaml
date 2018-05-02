@@ -274,7 +274,6 @@ spec:
             - name: CONCOURSE_PROMETHEUS_BIND_PORT
               value: {{ .Values.web.metrics.prometheus.port | quote }}
             {{- end }}
-<<<<<<< HEAD
             {{- if .Values.web.metrics.datadog.enabled }}
             - name: CONCOURSE_DATADOG_AGENT_HOST
             {{- if .Values.web.metrics.datadog.agentHostUseHostIP }}
@@ -286,7 +285,6 @@ spec:
             {{- end }}
             - name: CONCOURSE_DATADOG_AGENT_PORT
               value: {{ .Values.web.metrics.datadog.agentPort | quote }}
-=======
             {{- if .Values.web.xFrameOptions }}
             - name: CONCOURSE_X_FRAME_OPTIONS
               value: {{ .Values.web.xFrameOptions | quote }}
@@ -298,7 +296,14 @@ spec:
             {{- if .Values.web.logging.level }}
             - name: CONCOURSE_LOG_LEVEL
               value: {{ .Values.web.logging.logLevel | quote }}
->>>>>>> Add miscellaneous concourse atc flags.
+            {{- end }}
+            {{- if .Values.web.defaultBuildLogsToRetain }}
+            - name: CONCOURSE_DEFAULT_BUILD_LOGS_TO_RETAIN
+              value: {{ .Values.web.defaultBuildLogsToRetain | quote }}
+            {{- end }}
+            {{- if .Values.web.maxBuildLogsToRetain }}
+            - name: CONCOURSE_MAX_BUILD_LOGS_TO_RETAIN
+              value: {{ .Values.web.maxBuildLogsToRetain | quote }}
             {{- end }}
           ports:
             - name: atc
