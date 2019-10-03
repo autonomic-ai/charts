@@ -25,6 +25,15 @@ rules:
       - watch
   - apiGroups:
       - "extensions"
+    resources:
+      - deployments
+      - daemonsets
+    verbs:
+      - list
+      - get
+      - update
+      - patch
+  - apiGroups:
       - "apps"
     resources:
       - deployments
