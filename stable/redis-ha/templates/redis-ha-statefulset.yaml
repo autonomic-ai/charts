@@ -172,10 +172,30 @@ spec:
             {{- end }}
               key: {{ .Values.authKey }}
         {{- end }}
+        {{- if .Values.server.livenessProbe.enabled}}
         livenessProbe:
-          tcpSocket:
-            port: {{ .Values.redis.port }}
-          initialDelaySeconds: 15
+          initialDelaySeconds: {{ .Values.server.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.server.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.server.livenessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.server.livenessProbe.successThreshold }}
+          failureThreshold: {{ .Values.server.livenessProbe.failureThreshold }}
+          exec:
+            command:
+            - redis-cli
+            - ping
+        {{- end }}
+        {{- if .Values.server.readinessProbe.enabled}}
+        readinessProbe:
+          initialDelaySeconds: {{ .Values.server.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.server.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.server.readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.server.readinessProbe.successThreshold }}
+          failureThreshold: {{ .Values.server.readinessProbe.failureThreshold }}
+          exec:
+            command:
+            - redis-cli
+            - ping
+        {{- end }}
         resources:
 {{ toYaml .Values.redis.resources | indent 10 }}
         ports:
